@@ -7,7 +7,7 @@ fi
 
 if [ ! -r $1 ]
  then
-	echo "Fichier illisible"
+	echo "Unreadable file"
 	exit
 fi
 
