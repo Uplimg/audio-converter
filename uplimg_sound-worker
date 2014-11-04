@@ -1,0 +1,35 @@
+#!/bin/bash
+if [ -z $1 ]
+ then
+	echo "Please insert audio file path"
+	exit
+fi
+
+if [ ! -r $1 ]
+ then
+	echo "Fichier illisible"
+	exit
+fi
+
+fileMime=`mimetype -M -b $1`
+echo $fileMime
+
+if [ $fileMime = 'audio/mpeg' ]
+ then
+	soundconverter -b -m wav -s .wav $1
+	exit
+fi
+
+if [ $fileMime = 'audio/x-wav' ]
+ then
+	soundconverter -b -m audio/mpeg -s .mp3 $1
+	exit
+fi
+
+shortMime=`echo $fileMime | cut -c1-5`
+
+if [ $shortMime = 'audio' ]
+ then
+	soundconverter -b -m wav -s .wav $1
+	soundconverter -b -m audio/mpeg -s .mp3 $1
+fi
